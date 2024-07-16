@@ -1,0 +1,32 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "This is namaste react ",
+  "scripts": {
+    "start" : "parcel index.html",
+    "build" : "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Balamanikandan32/namaste-react.git"
+  },
+  "keywords": [],
+  "author": "Balamanikandan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Balamanikandan32/namaste-react/issues"
+  },
+  "homepage": "https://github.com/Balamanikandan32/namaste-react#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "browserlist" : [
+    "last 2 versions"
+  ]
+}
