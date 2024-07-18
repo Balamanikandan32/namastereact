@@ -1,4 +1,11 @@
 #heading {
-    color:red;
+    color:rgb(233, 16, 16);
     text-decoration: underline;
+}
+.bala{
+    background-color: #e6d8d8;
+}
+
+#mainheading {
+    color:aqua
 }
