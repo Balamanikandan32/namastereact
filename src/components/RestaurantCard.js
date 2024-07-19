@@ -14,7 +14,6 @@ const RestaurantCard = (props) => {
     deliveryTime,
     cloudinaryImageId,
   } = restaurantData?.data;
-  props.restaurantData.data.name = "balamanikandan";
   return (
     <div className="restaurant-cart" style={styleCard}>
       {/* style = {{backgroundColor : "#f0f0f0"}} */}
