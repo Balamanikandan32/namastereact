@@ -11,9 +11,9 @@ const RestaurantCard = (props) => {
     cuisines,
     costForTwo,
     avgRating,
-    deliveryTime,
     cloudinaryImageId,
-  } = restaurantData?.data;
+    sla
+  } = restaurantData;
   return (
     <div className="restaurant-cart" style={styleCard}>
       {/* style = {{backgroundColor : "#f0f0f0"}} */}
@@ -24,9 +24,9 @@ const RestaurantCard = (props) => {
       />
       <h3>{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
-      <h4>{costForTwo / 100} For Two</h4>
-      <h4>{avgRating} stars</h4>
-      <h4>{deliveryTime} minutes</h4>
+      <h4>{costForTwo.split(" ")[0]} For Two</h4>
+      <h4>{Number(avgRating) ? avgRating : "--"} stars</h4>
+      <h4>{sla?.deliveryTime} minutes</h4>
     </div>
   );
 };

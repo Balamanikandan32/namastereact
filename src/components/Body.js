@@ -1,31 +1,72 @@
 import RestaurantCard from "./RestaurantCard";
-import { resList } from "../Utility/mockdata";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ShimmerUi from "./ShimmerUi";
 
 const Body = () => {
-  const [restaurantList, setRestaurantList] = useState(resList);
-  const clickhandler = () => {
-    // const TopRestaurantList = restaurantList.filter(restData => restData?.data?.avgRating > 4)
-    // setRestaurantList(TopRestaurantList)
-    setRestaurantList((restaurantList) =>
-      restaurantList.filter((restData) => restData?.data?.avgRating > 4)
+  const [restaurantList, setRestaurantList] = useState([]);
+  const [filterRestaurant, setFilterRestaurant] = useState([])
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    restaurantData();
+  }, []);
+
+  const restaurantData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.99740&lng=79.00110&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
+    const json = await data.json();
+    const fetchData =
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants.map(
+        (restrauntlist) => restrauntlist.info
+      );
+    setRestaurantList(fetchData);
+    setFilterRestaurant(fetchData)
+    setLoading(false);
   };
 
-  return (
+  const topRestaurant = () => {
+    // const TopRestaurantList = restaurantList.filter(restData => restData?.avgRating > 4)
+    // setRestaurantList(TopRestaurantList)
+     // setRestaurantList((restaurantList) =>
+    //   restaurantList.filter((restData) => restData?.avgRating > 4)
+    // );
+    const TopRestaurantList = restaurantList.filter(restData => restData?.avgRating > 4)
+    setFilterRestaurant(TopRestaurantList)
+  };
+
+  return loading ? (
+    <ShimmerUi />
+  ) : (
     <div className="body">
-      <div className="search-bar">search bar</div>
-      <div>
-        <button className="filter-btn" onClick={clickhandler}>
+      <div className="filter-container">
+        <input
+          type="text"
+          name="search-bar"
+          placeholder="Enter Restaurant Name"
+          value={searchText}
+          onChange={(event) => {
+            setSearchText(event?.target?.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            const filterList = restaurantList.filter((restData) => 
+              restData?.name?.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setFilterRestaurant(filterList)
+          }}
+        >
+          Search
+        </button>
+        <button className="filter-btn" onClick={topRestaurant}>
           Top Rated Restaurant
         </button>
       </div>
       <div className="restaurant-container">
-        {restaurantList.map((restaurant) => (
-          <RestaurantCard
-            key={restaurant.data.id}
-            restaurantData={restaurant}
-          />
+        {filterRestaurant.map((restaurant) => (
+          <RestaurantCard key={restaurant.id} restaurantData={restaurant} />
         ))}
       </div>
     </div>
