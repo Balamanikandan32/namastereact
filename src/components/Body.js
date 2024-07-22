@@ -1,10 +1,11 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
-  const [filterRestaurant, setFilterRestaurant] = useState([])
+  const [filterRestaurant, setFilterRestaurant] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
@@ -18,22 +19,24 @@ const Body = () => {
     );
     const json = await data.json();
     const fetchData =
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants.map(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants.map(
         (restrauntlist) => restrauntlist.info
       );
     setRestaurantList(fetchData);
-    setFilterRestaurant(fetchData)
+    setFilterRestaurant(fetchData);
     setLoading(false);
   };
 
   const topRestaurant = () => {
     // const TopRestaurantList = restaurantList.filter(restData => restData?.avgRating > 4)
     // setRestaurantList(TopRestaurantList)
-     // setRestaurantList((restaurantList) =>
+    // setRestaurantList((restaurantList) =>
     //   restaurantList.filter((restData) => restData?.avgRating > 4)
     // );
-    const TopRestaurantList = restaurantList.filter(restData => restData?.avgRating > 4)
-    setFilterRestaurant(TopRestaurantList)
+    const TopRestaurantList = restaurantList.filter(
+      (restData) => restData?.avgRating > 4
+    );
+    setFilterRestaurant(TopRestaurantList);
   };
 
   return loading ? (
@@ -52,10 +55,10 @@ const Body = () => {
         />
         <button
           onClick={() => {
-            const filterList = restaurantList.filter((restData) => 
+            const filterList = restaurantList.filter((restData) =>
               restData?.name?.toLowerCase().includes(searchText.toLowerCase())
             );
-            setFilterRestaurant(filterList)
+            setFilterRestaurant(filterList);
           }}
         >
           Search
@@ -66,7 +69,9 @@ const Body = () => {
       </div>
       <div className="restaurant-container">
         {filterRestaurant.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} restaurantData={restaurant} />
+          <Link to={"/restaurantmenu/" + restaurant.id} key={restaurant.id}>
+            <RestaurantCard restaurantData={restaurant} />
+          </Link>
         ))}
       </div>
     </div>
