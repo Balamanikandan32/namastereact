@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../Utility/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [logInOut, setLogInOut] = useState("Login");
+
 
   return (
     <div className="header">
@@ -23,6 +24,7 @@ const Header = () => {
                 logInOut === "Login"
                   ? setLogInOut("Logout")
                   : setLogInOut("Login");
+                setvalue(value+1)
               }}
             >
               {logInOut}
