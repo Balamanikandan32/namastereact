@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../Utility/constants";
 import { useEffect, useState } from "react";
+import useOnlineStatus from "../Utility/useOnlineStatus";
 
 const Header = () => {
   const [logInOut, setLogInOut] = useState("Login");
-
+  const onlineStatus = useOnlineStatus()
 
   return (
     <div className="header">
@@ -13,9 +14,11 @@ const Header = () => {
       </div>
       <div className="nav-items">
         <ul>
+          <li>Online Status : {onlineStatus ? '🟢' : '🔴'}</li>  {/* here we are not using key attribute beacuse the list in static we can use key attribute for dynamic(ike map over element , etc.,)  */}
           <li><Link to ="/">Home</Link></li>
           <li><Link to = "/about">About Us</Link></li>
           <li><Link to = "/contact">Contact Us</Link></li>
+          <li><Link to = "/grocery">Grocery</Link></li>
           <li>Cart</li>
           <div className="loginout-container">
             <button

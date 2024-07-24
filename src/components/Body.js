@@ -1,13 +1,16 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
+import Offline from "./Offline";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../Utility/useOnlineStatus";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filterRestaurant, setFilterRestaurant] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
+  const onlineStatus = useOnlineStatus()
 
   useEffect(() => {
     restaurantData();
@@ -37,7 +40,7 @@ const Body = () => {
     setFilterRestaurant(TopRestaurantList);
   };
 
-  return loading ? (
+  return !onlineStatus ? <Offline />: loading ? (
     <ShimmerUi />
   ) : (
     <div className="body">

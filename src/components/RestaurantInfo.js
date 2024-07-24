@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { Restaurant_INFO_URL } from "../Utility/constants";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../Utility/useRestaurantMenu";
 
 const RestaurantInfo = () => {
-  const [restaurantInfo, setRestaurantInfo] = useState(null);
+  // const [restaurantInfo, setRestaurantInfo] = useState(null);
   const {restid} = useParams()
+  const restaurantInfo = useRestaurantMenu(restid)
   const itemCards =restaurantInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards;
-  useEffect(() => { 
-    fetchData();
-  }, []);
+  // IMPLEMENTED USING CUSTOM HOOKS 
+  
+  // useEffect(() => { 
+  //   fetchData();
+  // }, []);
 
-  const fetchData = async () => {
-    const data = await fetch(Restaurant_INFO_URL + restid);
-    const json = await data.json();
-    setRestaurantInfo(json);
-  };
-
+  // const fetchData = async () => {
+  //   const data = await fetch(Restaurant_INFO_URL + restid);
+  //   const json = await data.json();
+  //   setRestaurantInfo(json);
+  // };
   return (
     <div>
       <h1>{restaurantInfo?.data.cards?.[0].card.card.text}</h1>
